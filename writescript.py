@@ -1,5 +1,5 @@
 #import argparse as ap
-
+'''Writes the various submit scripts for submition to Stampede3 (TACC)'''
 #parser = ap.ArgumentParser(description='short sample')
 #parser.add_argument('--seq', action='store', dest='seq', default=0, type=int)
 #parser.add_argument('--day', action='store', dest='day', default=None, type=int)
