@@ -8,4 +8,4 @@ WRF-GHG 4.5.2 (?) by NOAA/NCAR/UCAR with modifications by Xiao-Ming Hu and Steve
 
 For more information please email Steve Jester at steve@belumenus.com
 
-More doccumentation is forthcoming.
+More documentation is forthcoming.
