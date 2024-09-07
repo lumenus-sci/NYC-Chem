@@ -1,6 +1,6 @@
 #/bin/bash -l
 
-for i in {1..48}
+for i in {1..48} ## for loop to submit scripts to SLURM
 do
 	if [ $i -eq 1 ]; then
 		JOB_ID=$(sbatch --parsable wrf_ghg_01.sh)
