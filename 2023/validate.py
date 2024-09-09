@@ -6,6 +6,7 @@ from netCDF4 import Dataset #type: ignore
 from termcolor import cprint
 from numpy import unravel_index
 import collections.abc as c
+import numpy.typing as npt
 
 
 class Base_point:
@@ -16,32 +17,32 @@ class Base_point:
         self.loc = loc
 
 class UA_point(Base_point):
-    def __init__(self: object, loc: str, **kwargs) -> None:
+    def __init__(self, loc: str, **kwargs) -> None:
         super().__init__(loc, **kwargs)
-    def __eq__(self: object, other: object) -> bool:
+    def __eq__(self, other: object) -> bool:
         try: #! come back to this...
-            results: np.ndarray[bool] = np.empty(5, bool)
+            results: npt.NDArray[np.bool_] = np.empty(5, np.bool_)
             results[0] = np.allclose(self.p, other.p, atol=10.)
             results[1] = np.allclose(self.t, other.t, atol=1.)
             results[2] = np.allclose(self.td, other.td, atol=1.)
             results[3] = np.allclose(self.wdir, other.wdir, atol=5.)
             results[4] = np.allclose(self.wspd, other.wspd, atol=1.)
-            result: bool = results.all()
+            result: bool_ = results.all()
         except AttributeError:
             if isinstance(self, WRF_point):
-                result = other.__eq__(self)
+                result: bool = other.__eq__(self)
             else:
-                result = NotImplemented
+                raise NotImplementedError('Compairison not implemented')
         finally:
             return result
 
 class Sat_point(Base_point):
-    def __init__(self, loc, **kwargs):
+    def __init__(self, loc: str, **kwargs) -> None:
         super().__init__(loc, **kwargs)
-    def sat_loc(self, ulat, ulon, lats, lons):
-        R = 6371000
-        lat1 = np.radians(ulat)
-        lat2 = np.radians(lats)
+    def sat_loc(self: object, ulat: float, ulon: float, lats: c.Iterable[float], lons: c.Iterable[float]) -> tuple[int, int] | int:
+        R: int = 6371000
+        lat1: float = np.radians(ulat)
+        lat2: np.ndarray[float] = np.radians(lats)
         delta_lat = np.radians(lats-ulat)
         delta_lon = np.radians(lons-ulon)
         a = (np.sin(delta_lat/2))*(np.sin(delta_lat/2))+(np.cos(lat1))*(np.cos(lat2))*(np.sin(delta_lon/2))*(np.sin(delta_lon/2))
