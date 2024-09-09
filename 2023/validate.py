@@ -27,7 +27,7 @@ class UA_point(Base_point):
             results[2] = np.allclose(self.td, other.td, atol=1.)
             results[3] = np.allclose(self.wdir, other.wdir, atol=5.)
             results[4] = np.allclose(self.wspd, other.wspd, atol=1.)
-            result: bool_ = results.all()
+            result: bool = bool(results.all())
         except AttributeError:
             if isinstance(self, WRF_point):
                 result: bool = other.__eq__(self)
@@ -39,20 +39,22 @@ class UA_point(Base_point):
 class Sat_point(Base_point):
     def __init__(self, loc: str, **kwargs) -> None:
         super().__init__(loc, **kwargs)
-    def sat_loc(self: object, ulat: float, ulon: float, lats: c.Iterable[float], lons: c.Iterable[float]) -> tuple[int, int] | int:
+    def sat_loc(self: object, ulat: float, ulon: float, lats: npt.ArrayLike, lons: npt.ArrayLike) -> tuple[int, int] | int:
         R: int = 6371000
         lat1: float = np.radians(ulat)
-        lat2: np.ndarray[float] = np.radians(lats)
-        delta_lat = np.radians(lats-ulat)
-        delta_lon = np.radians(lons-ulon)
-        a = (np.sin(delta_lat/2))*(np.sin(delta_lat/2))+(np.cos(lat1))*(np.cos(lat2))*(np.sin(delta_lon/2))*(np.sin(delta_lon/2))
-        c = 2*np.arctan2(np.sqrt(a),np.sqrt(1-a))
-        d = R*c
+        lat2: npt.NDArray = np.radians(lats)
+        delta_lat: npt.NDArray = np.radians(lats-ulat)
+        delta_lon: npt.NDArray = np.radians(lons-ulon)
+        a: npt.NDArray = (np.sin(delta_lat/2))*(np.sin(delta_lat/2))+(np.cos(lat1))*(np.cos(lat2))*(np.sin(delta_lon/2))*(np.sin(delta_lon/2))
+        c: npt.NDArray = 2*np.arctan2(np.sqrt(a),np.sqrt(1-a))
+        d: npt.NDArray = R*c
         if d.ndim == 1:
             return d.argmin()
         else:
-            x, y = unravel_index(d.argmin(),d.shape)
-            return x,y
+            x: int
+            y: int
+            x, y = unravel_index(d.argmin(),d.shape) #type: tuple[int, int]
+            return x, y
     def __eq__(self, other: object) -> bool:
         result = None
         try:
