@@ -5,27 +5,28 @@ from datetime import datetime as dt
 from netCDF4 import Dataset #type: ignore
 from termcolor import cprint
 from numpy import unravel_index
+import collections.abc as c
 
 
 class Base_point:
     '''
     Base_point: parent class for validation. Sets location name.
     '''
-    def __init__(self, loc, **kwargs):
+    def __init__(self: object, loc: str, **kwargs) -> None:
         self.loc = loc
 
 class UA_point(Base_point):
-    def __init__(self, loc, **kwargs):
+    def __init__(self: object, loc: str, **kwargs) -> None:
         super().__init__(loc, **kwargs)
-    def __eq__(self, other: object) -> bool:
+    def __eq__(self: object, other: object) -> bool:
         try: #! come back to this...
-            results = np.empty(5, bool)
+            results: np.ndarray[bool] = np.empty(5, bool)
             results[0] = np.allclose(self.p, other.p, atol=10.)
             results[1] = np.allclose(self.t, other.t, atol=1.)
             results[2] = np.allclose(self.td, other.td, atol=1.)
             results[3] = np.allclose(self.wdir, other.wdir, atol=5.)
             results[4] = np.allclose(self.wspd, other.wspd, atol=1.)
-            result = results.all()
+            result: bool = results.all()
         except AttributeError:
             if isinstance(self, WRF_point):
                 result = other.__eq__(self)
