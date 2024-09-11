@@ -266,7 +266,7 @@ class OCO_Point(Sat_point):
     def __init__(self, loc, oco_f, ulat, ulon, **kwargs):
         super().__init__(loc, **kwargs)
         ds = Dataset(oco_f, 'r')
-        lats = ds['atitude'][:]
+        lats = ds['latitude'][:]
         lons = ds['longitude'][:]
         idx = self.sat_loc(ulat, ulon, lats, lons)
         _xco2 = ds['']
