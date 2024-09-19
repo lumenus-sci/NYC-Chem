@@ -2,9 +2,9 @@ seqs = ['real', *(x for x in range(1,49))]
 sdays = [20, *(x for x in range(20,32) for _ in (0,1)), *(x for x in range(1,13) for _ in (0,1))]
 edays = [13, 20, *(x for x in range(21,32) for _ in (0,1)), *(x for x in range(1,13) for _ in (0,1)), 13]
 smons = [*([7] * 25), *([8] * 24)]
-emons = [*([7] * 24), *([8] * 25)]
+emons = [8, *([7] * 23), *([8] * 25)]
 shrs = [0, *([0, 12] * 24)]
-ehrs = [12, *([12, 0] * 24)]
+ehrs = [0, *([12, 0] * 24)]
 
 
 for seq, smon, sday, shr, emon, eday, ehr in zip(seqs, smons, sdays, shrs, emons, edays, ehrs):
