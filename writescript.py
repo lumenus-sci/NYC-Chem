@@ -1,27 +1,15 @@
-#import argparse as ap
-'''Writes the various submit scripts for submition to Stampede3 (TACC)'''
-#parser = ap.ArgumentParser(description='short sample')
-#parser.add_argument('--seq', action='store', dest='seq', default=0, type=int)
-#parser.add_argument('--day', action='store', dest='day', default=None, type=int)
-#parser.add_argument('--mon', action='store', dest='mon', default=None, type=int)
-#parser.add_argument('--hr', action='store', dest='hr', default=None, type=int)
-#args = parser.parse_args()
-seqs = [x for x in range(1,49)]
-days = [x for x in range(20,32) for _ in (0,1)]
-days2 = [x for x in range(1,13) for _ in (0,1)]
-days.extend(days2)
-mons = [7] * 24
-mons2 = [8] * 24
-mons.extend(mons2)
-hrs = [0, 12] * 24
+seqs = ['real', *(x for x in range(1,49))]
+days = [20, *(x for x in range(20,32) for _ in (0,1)), *(x for x in range(1,13) for _ in (0,1))]
+mons = [*([7] * 25), *([8] * 24)]
+hrs = [0, *([0, 12] * 24)]
 
 for seq, mon, day, hr in zip(seqs, mons, days, hrs):
-    with open(f'wrf_ghg_{seq:02}.sh','a') as fl:
+    with open(f'wrf_ghg_{f"{seq:02}" if isinstance(seq, int) else seq}.sh','a') as fl:
         fl.write('#!/bin/bash -l\n')
         fl.write('#\n')
-        fl.write(f'#SBATCH -J WRF_GHG_{seq:02}\n')
-        fl.write(f'#SBATCH -e WRF_GHG_{seq:02}.e.%j\n')
-        fl.write(f'#SBATCH -o WRF_GHG_{seq:02}.o.%j\n')
+        fl.write(f'#SBATCH -J WRF_GHG_{f"{seq:02}" if isinstance(seq, int) else seq.upper()}\n')
+        fl.write(f'#SBATCH -e WRF_GHG_{f"{seq:02}" if isinstance(seq, int) else seq.upper()}.e.%j\n')
+        fl.write(f'#SBATCH -o WRF_GHG_{f"{seq:02}" if isinstance(seq, int) else seq.upper()}.o.%j\n')
         fl.write('#SBATCH --ntasks-per-node 48\n')
         fl.write('#SBATCH -N 4       # skx-dev\n') 
         fl.write('#SBATCH -p skx # Queue name\n')
@@ -29,7 +17,7 @@ for seq, mon, day, hr in zip(seqs, mons, days, hrs):
         fl.write('#SBATCH --mail-user=steve@belumenus.com\n')
         fl.write('#SBATCH --mail-type=all\n')
         fl.write('\n')
-        if seq == 1:
+        if seq == 'real':
             fl.write('ln -sf $HOME/work/WRF-4.5.2/WRF/WRFV4.5.2/run/* .\n')
             fl.write('ln -sf ../../wps/2023-nudge/met_em* .\n')
             fl.write('ln -sf $HOME/work/chem-files/wrf* .\n')
@@ -54,13 +42,14 @@ for seq, mon, day, hr in zip(seqs, mons, days, hrs):
             fl.write('./mozbc < CO2CAMS_2024yearly08.inp >& CO2_d01.log\n')
             fl.write('./mozbc < CO2CAMS_2024yearly08_d02.inp >& CO2_d02.log\n')
             fl.write('\n')
-        fl.write(f'ln -sf namelist.input.{seq:02} namelist.input\n')
-        if seq > 1:
-            fl.write(f'ncatted -O -h -a MMINLU,global,m,c,"MODIFIED_IGBP_MODIS_NOAH" wrfrst_d02_2023-{mon:02}-{day:02}_{hr:02}:00:00 wrfrst_d02_2023-{mon:02}-{day:02}_{hr:02}:00:00\n')
-        fl.write(f'\n')
-        fl.write('ibrun ./wrf.exe >& wrf.log\n')
-        fl.write(f'mv rsl.out.0000 rsl.out.wrf.{seq:02}\n')
-        fl.write(f'mv rsl.error.0000 rsl.error.wrf.{seq:02}\n')
+        else:
+            fl.write(f'ln -sf namelist.input.{f"{seq:02}" if isinstance(seq, int) else seq} namelist.input\n')
+            if seq > 1:
+                fl.write(f'ncatted -O -h -a MMINLU,global,m,c,"MODIFIED_IGBP_MODIS_NOAH" wrfrst_d02_2023-{mon:02}-{day:02}_{hr:02}:00:00 wrfrst_d02_2023-{mon:02}-{day:02}_{hr:02}:00:00\n')
+            fl.write(f'\n')
+            fl.write('ibrun ./wrf.exe >& wrf.log\n')
+            fl.write(f'mv rsl.out.0000 rsl.out.wrf.{f"{seq:02}" if isinstance(seq, int) else seq}\n')
+            fl.write(f'mv rsl.error.0000 rsl.error.wrf.{f"{seq:02}" if isinstance(seq, int) else seq}\n')
         fl.write('\n')
         
 
