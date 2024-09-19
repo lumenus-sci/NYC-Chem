@@ -1,14 +1,14 @@
-seqs = [x for x in range(1,49)]
-sdays = [*(x for x in range(20,32) for _ in (0,1)), *(x for x in range(1,13) for _ in (0,1))]
-edays = [20, *(x for x in range(21,32) for _ in (0,1)), *(x for x in range(1,13) for _ in (0,1)), 13]
-smons = [*([7] * 24), *([8] * 24)]
-emons = [*([7] * 23), *([8] * 25)]
-shrs = [0, 12] * 24
-ehrs = [12, 0] * 24
+seqs = ['real', *(x for x in range(1,49))]
+sdays = [20, *(x for x in range(20,32) for _ in (0,1)), *(x for x in range(1,13) for _ in (0,1))]
+edays = [13, 20, *(x for x in range(21,32) for _ in (0,1)), *(x for x in range(1,13) for _ in (0,1)), 13]
+smons = [*([7] * 25), *([8] * 24)]
+emons = [*([7] * 24), *([8] * 25)]
+shrs = [0, *([0, 12] * 24)]
+ehrs = [12, *([12, 0] * 24)]
 
 
 for seq, smon, sday, shr, emon, eday, ehr in zip(seqs, smons, sdays, shrs, emons, edays, ehrs):
-    with open(f'namelist.input.{seq:02}','a') as fl:
+    with open(f'namelist.input.{f"{seq:02}" if isinstance(seq, int) else seq}','a') as fl:
         fl.write(f'&time_control\n')
         fl.write(f'run_days                            = 0,\n')
         fl.write(f'run_hours                           = 12,\n')
@@ -32,7 +32,7 @@ for seq, smon, sday, shr, emon, eday, ehr in zip(seqs, smons, sdays, shrs, emons
         fl.write(f'input_from_file                     = .true.,.true.,.true.,.true.,\n')
         fl.write(f'history_interval                    = 60, 60, 60, 60,\n')
         fl.write(f'frames_per_outfile                  = 1,  1,  1,  1,\n')
-        if seq == 1:
+        if seq in ['real', 1]:
             fl.write(f'restart                             = .false.,\n')
         else:
             fl.write(f'restart                             = .true.,\n')
