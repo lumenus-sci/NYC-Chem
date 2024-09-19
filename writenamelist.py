@@ -8,7 +8,7 @@ ehrs = [12, 0] * 24
 
 
 for seq, smon, sday, shr, emon, eday, ehr in zip(seqs, smons, sdays, shrs, emons, edays, ehrs):
-    with open(f'wrf_ghg_{seq:02}.sh','a') as fl:
+    with open(f'namelist.input.{seq:02}','a') as fl:
         fl.write(f'&time_control\n')
         fl.write(f'run_days                            = 0,\n')
         fl.write(f'run_hours                           = 12,\n')
