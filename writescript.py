@@ -30,9 +30,8 @@ for seq, mon, day, hr in zip(seqs, mons, days, hrs):
         fl.write('#SBATCH --mail-type=all\n')
         fl.write('\n')
         if seq == 1:
-            fl.write('cp $HOME/work/nyc-chem/2023/namelist.input.* .\n')
             fl.write('ln -s $HOME/work/WRF-4.5.2/WRF/WRFV4.5.2/run/* .\n')
-            fl.write('ln -s ../../wps/2023/met_em* .\n')
+            fl.write('ln -s ../../wps/2023-nudge/met_em* .\n')
             fl.write('ln -s $HOME/work/chem-files/wrf* .\n')
             fl.write('ln -s $HOME/work/chem-files/hist* .\n')
             fl.write('ln -sf namelist.input.real namelist.input\n')
