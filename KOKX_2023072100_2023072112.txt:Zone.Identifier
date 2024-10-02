@@ -1,0 +1,4 @@
+[ZoneTransfer]
+ZoneId=3
+ReferrerUrl=https://mesonet.agron.iastate.edu/archive/raob/
+HostUrl=https://mesonet.agron.iastate.edu/cgi-bin/request/raob.py?station=KOKX&sts=07%2F21%2F2023+00%3A00&ets=07%2F21%2F2023+12%3A00&dl=on
