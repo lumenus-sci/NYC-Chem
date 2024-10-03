@@ -19,7 +19,7 @@ for seq, mon, day, hr in zip(seqs, mons, days, hrs):
         fl.write('\n')
         if seq == 'real':
             fl.write('ln -sf $HOME/work/WRF-4.5.2/WRF/WRFV4.5.2/run/* .\n')
-            fl.write('ln -sf ../../wps/2023-nudge/met_em* .\n')
+            fl.write('ln -sf ../../wps/2023-expand/met_em* .\n')
             fl.write('ln -sf $HOME/work/chem-files/wrf* .\n')
             fl.write('ln -sf $HOME/work/chem-files/hist* .\n')
             fl.write('ln -sf namelist.input.real namelist.input\n')
