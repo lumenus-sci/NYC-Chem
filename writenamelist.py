@@ -63,7 +63,7 @@ for seq, smon, sday, shr, emon, eday, ehr in zip(seqs, smons, sdays, shrs, emons
         fl.write(f's_we                                = 1,     1,     1,     1,\n')
         fl.write(f'e_we                                = 443,   406,   161,   161,\n')
         fl.write(f's_sn                                = 1,     1,     1,     1,\n')
-        fl.write(f'e_sn                                = 266,   362,   161,   161,\n')
+        fl.write(f'e_sn                                = 266,   361,   161,   161,\n')
         fl.write(f's_vert                              = 1,     1,     1,     1,\n')
         fl.write(f'e_vert                              = 48,   48,   48,     48,\n')
         fl.write(f'sfcp_to_sfcp                         = .false.\n')
