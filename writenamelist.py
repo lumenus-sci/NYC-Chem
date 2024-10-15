@@ -1,10 +1,18 @@
-seqs = ['real', *(x for x in range(1,49))]
-sdays = [20, *(x for x in range(20,32) for _ in (0,1)), *(x for x in range(1,13) for _ in (0,1))]
-edays = [13, 20, *(x for x in range(21,32) for _ in (0,1)), *(x for x in range(1,13) for _ in (0,1)), 13]
-smons = [*([7] * 25), *([8] * 24)]
-emons = [8, *([7] * 23), *([8] * 25)]
-shrs = [0, *([0, 12] * 24)]
-ehrs = [0, *([12, 0] * 24)]
+## Script that writes out the namelists for a multi-stage WRF run. Options at the beginning can be edited to the length and details of the simulation
+
+seqs = ['real', *(x for x in range(1,49))] #must contain 'real' at the beginning
+sdays = [20, *(x for x in range(20,32) for _ in (0,1)), *(x for x in range(1,13) for _ in (0,1))] #must contain the start for entire sim at beginning
+edays = [13, 20, *(x for x in range(21,32) for _ in (0,1)), *(x for x in range(1,13) for _ in (0,1)), 13] #must have end of entire sim at beginning
+smons = [*([7] * 25), *([8] * 24)] #must have start of entire sim at beginning
+emons = [8, *([7] * 23), *([8] * 25)] #must have end of entire sim at beginning
+shrs = [0, *([0, 12] * 24)] #must have start of entire sim at beginning
+ehrs = [0, *([12, 0] * 24)] #must have end of entire sim at beginning
+e_we_d01 = 443
+e_we_d02 = 301
+e_sn_d01 = 266
+e_sn_d02 = 256
+i_parent_start_d02 = 372
+j_parent_start_d02 = 154
 
 
 for seq, smon, sday, shr, emon, eday, ehr in zip(seqs, smons, sdays, shrs, emons, edays, ehrs):
@@ -61,9 +69,9 @@ for seq, smon, sday, shr, emon, eday, ehr in zip(seqs, smons, sdays, shrs, emons
         fl.write(f'time_step_fract_den                 = 1,\n')
         fl.write(f'max_dom                             = 2,\n')
         fl.write(f's_we                                = 1,     1,     1,     1,\n')
-        fl.write(f'e_we                                = 443,   301,   161,   161,\n')
+        fl.write(f'e_we                                = {e_we_d01},   {e_we_d02},   161,   161,\n')
         fl.write(f's_sn                                = 1,     1,     1,     1,\n')
-        fl.write(f'e_sn                                = 266,   256,   161,   161,\n')
+        fl.write(f'e_sn                                = {e_sn_d01},   {e_sn_d02},   161,   161,\n')
         fl.write(f's_vert                              = 1,     1,     1,     1,\n')
         fl.write(f'e_vert                              = 48,   48,   48,     48,\n')
         fl.write(f'sfcp_to_sfcp                         = .false.\n')
@@ -71,8 +79,8 @@ for seq, smon, sday, shr, emon, eday, ehr in zip(seqs, smons, sdays, shrs, emons
         fl.write(f'dy                                  = 12000,   800,   160,   32,\n')
         fl.write(f'grid_id                             = 1,     2,     3,     4,\n')
         fl.write(f'parent_id                           = 1,   1,   2,   3,\n')
-        fl.write(f'i_parent_start                      = 1,   372,   164,   77,\n')
-        fl.write(f'j_parent_start                      = 1,   154,   90,   80,\n')
+        fl.write(f'i_parent_start                      = 1,   {i_parent_start_d02},   164,   77,\n')
+        fl.write(f'j_parent_start                      = 1,   {j_parent_start_d02},   90,   80,\n')
         fl.write(f'parent_grid_ratio                   = 1,   15,   5,   5,\n')
         fl.write(f'parent_time_step_ratio              = 1,   15,    5,    5,\n')
         fl.write(f'feedback                            = 0,\n')

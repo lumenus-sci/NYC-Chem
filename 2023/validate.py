@@ -53,7 +53,7 @@ class Sat_point(Base_point):
         else:
             x: int
             y: int
-            x, y = unravel_index(d.argmin(),d.shape) #type: tuple[int, int]
+            x, y = unravel_index(d.argmin(),d.shape)
             return x, y
     def __eq__(self, other: object) -> bool:
         result = None
