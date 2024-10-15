@@ -1,4 +1,6 @@
-seqs = ['real', *(x for x in range(1,49))]
+## Script that writes out the submision scripts for a multi-stage WRF run. Options at the beginning can be edited to the length and details of the simulation
+
+seqs = ['real', *(x for x in range(1,49))] # must have 'real' at the beginning
 days = [20, *(x for x in range(20,32) for _ in (0,1)), *(x for x in range(1,13) for _ in (0,1))]
 mons = [*([7] * 25), *([8] * 24)]
 hrs = [0, *([0, 12] * 24)]
