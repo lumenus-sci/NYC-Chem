@@ -25,5 +25,6 @@
         "wrfout",
         "xlim",
         "ylim"
-    ]
+    ],
+    "remote.autoForwardPortsFallback": 0
 }

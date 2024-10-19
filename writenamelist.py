@@ -1,4 +1,4 @@
-## Script that writes out the namelists for a multi-stage WRF run. Options at the beginning can be edited to the length and details of the simulation
+#! Script that writes out the namelists for a multi-stage WRF run. Options at the beginning can be edited to the length and details of the simulation
 
 seqs = ['real', *(x for x in range(1,49))] #must contain 'real' at the beginning
 sdays = [20, *(x for x in range(20,32) for _ in (0,1)), *(x for x in range(1,13) for _ in (0,1))] #must contain the start for entire sim at beginning
