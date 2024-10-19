@@ -1,4 +1,4 @@
-NYC-Chem
+# **NYC-Chem**
 
 WRF-GHG and STILT project involving HALO CH4 mission over NYC Jul 20 - Aug 12 2023.
 
@@ -8,4 +8,8 @@ WRF-GHG 4.5.2 (?) by NOAA/NCAR/UCAR with modifications by Xiao-Ming Hu and Steve
 
 For more information please email Steve Jester at steve@belumenus.com
 
-More documentation is forthcoming.
+## *Major files*
+
+### plot-atmosphere.ipynb
+
+This Jupyter Notebook is used to provide a sanity check on the WRF simulation so that 
