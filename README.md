@@ -36,6 +36,10 @@ This Python script is a prototype for *validate.ipynb*. Some classes from this f
 
 This Jupyter Notebook is a minimal notebook to plot the domain of a WRF file and superimpose a STILT domain on top of it. Setup and procedures are described in the notebook.
 
+### quick_plot.ipynb
+
+This Jupyter Notebook is a minimal notebook to plot certain variables from a WRF simulation file. Setup and procedures are described in the notebook.
+
 ### submit.sh
 
 This is a Bash script used for systematically submitting a multipart WRF simulation to Stampede3. The '623' mentioned is the number of characters needed to be skipped in order to get the proper job id for setting up dependencies. This will need to be edited for any HPC cluster other than Stampede3.
