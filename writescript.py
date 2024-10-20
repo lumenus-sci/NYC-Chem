@@ -4,6 +4,11 @@ seqs = ['real', *(x for x in range(1,49))] # must have 'real' at the beginning
 days = [20, *(x for x in range(20,32) for _ in (0,1)), *(x for x in range(1,13) for _ in (0,1))]
 mons = [*([7] * 25), *([8] * 24)]
 hrs = [0, *([0, 12] * 24)]
+email = '<put your email here>'
+queue = 'skx'
+run_time = '48:00:00' #must be in hh:mm:ss format
+tasks_per_node = 48
+nodes = 4
 
 for seq, mon, day, hr in zip(seqs, mons, days, hrs):
     with open(f'wrf_ghg_{f"{seq:02}" if isinstance(seq, int) else seq}.sh','a') as fl:
@@ -12,11 +17,11 @@ for seq, mon, day, hr in zip(seqs, mons, days, hrs):
         fl.write(f'#SBATCH -J WRF_GHG_{f"{seq:02}" if isinstance(seq, int) else seq.upper()}\n')
         fl.write(f'#SBATCH -e WRF_GHG_{f"{seq:02}" if isinstance(seq, int) else seq.upper()}.e.%j\n')
         fl.write(f'#SBATCH -o WRF_GHG_{f"{seq:02}" if isinstance(seq, int) else seq.upper()}.o.%j\n')
-        fl.write('#SBATCH --ntasks-per-node 48\n')
-        fl.write('#SBATCH -N 4       # skx-dev\n') 
-        fl.write('#SBATCH -p skx # Queue name\n')
-        fl.write('#SBATCH -t 48:00:00       # Run time (hh:mm:ss) - 1.5 hours\n')
-        fl.write('#SBATCH --mail-user=steve@belumenus.com\n')
+        fl.write(f'#SBATCH --ntasks-per-node {tasks_per_node}\n')
+        fl.write(f'#SBATCH -N {nodes}       # skx-dev\n') 
+        fl.write(f'#SBATCH -p {queue} # Queue name\n')
+        fl.write(f'#SBATCH -t {run_time}       # Run time (hh:mm:ss) - 1.5 hours\n')
+        fl.write(f'#SBATCH --mail-user={email}\n')
         fl.write('#SBATCH --mail-type=all\n')
         fl.write('\n')
         if seq == 'real':
